@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { pokemonRouter } from "./pokemon";
-import { trainerRouter } from "./trainer";
+import { pokemonRouter } from "./pokemonRouter";
+import { trainerRouter } from "./trainerRouter";
 
 const Routes = Router();
 
