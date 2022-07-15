@@ -3,7 +3,7 @@ import { PokemonService } from "../services/PokemonService";
 
 export class PokemonController {
   static create(req: Request, res: Response, next: NextFunction) {
-    const { id, name, type, trainer } = req.body;
+    const { name, type, trainer } = req.body;
     const response = PokemonService.create(name, type, trainer);
     res.status(200).json(response);
   }
@@ -15,17 +15,20 @@ export class PokemonController {
 
   static async findById(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
-    const response = await PokemonService.findOne(id as any);
+    const response = await PokemonService.findOne(id);
     res.status(200).json(response);
   }
 
-  static update(req: Request, res: Response, next: NextFunction) {
-    console.log(req.params);
-    res.status(200).json({});
+  static async update(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+    const { name } = req.body;
+    const response = await PokemonService.update(id, name);
+    res.status(200).json(response);
   }
 
-  static delete(req: Request, res: Response, next: NextFunction) {
-    console.log(req.params);
+  static async delete(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+    await PokemonService.delete(id);
     res.status(200).json({});
   }
 }
