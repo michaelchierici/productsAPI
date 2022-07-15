@@ -1,0 +1,4 @@
+[2022-07-15T13:28:16.181Z]creating a new table: pokemon
+[2022-07-15T13:28:16.252Z]creating a new table: trainer
+[2022-07-15T13:28:30.916Z][FAILED QUERY]: INSERT INTO "pokemon"("name", "type", "trainer") VALUES ($1, $2, DEFAULT) RETURNING "id" -- PARAMETERS: ["bulbasaur","grass"]
+[2022-07-15T13:28:30.916Z][QUERY ERROR]: error: null value in column "trainer" of relation "pokemon" violates not-null constraint

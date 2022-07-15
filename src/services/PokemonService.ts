@@ -1,9 +1,25 @@
+import { getRepository } from "typeorm";
+import { Pokemon } from "../entity/Pokemon";
+
 export class PokemonService {
-  static create(id: number, name: string, type: string, trainer: string) {
-    console.log(id, name, type, trainer);
+  static create(name: string, type: string, trainer: string) {
+    const pokemonRepository = getRepository(Pokemon);
+    const pokemon = pokemonRepository.create({ name, type, trainer });
+    pokemonRepository.save(pokemon);
+    return pokemon;
   }
 
-  static findAll() {
-    console.log("aqui está os pokemons");
+  static async findAll() {
+    const pokemonRepository = getRepository(Pokemon);
+    const pokemons = await pokemonRepository.find();
+    console.log(pokemons, "pokemons encontrados");
+    return pokemons;
+  }
+
+  static async findOne(id: number) {
+    const pokemonRepository = getRepository(Pokemon);
+    const pokemon = await pokemonRepository.findOne(id);
+    console.log(pokemon, "um pokemon encontrado");
+    return pokemon;
   }
 }
