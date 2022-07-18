@@ -1,10 +1,16 @@
+const path = require("path");
+
+require("dotenv").config({
+  path: path.resolve("enviroments", (process.env.NODE_ENV = ".env")),
+});
+
 const typeORMConnectionOptions = {
-  type: "postgres",
-  host: "localhost",
-  port: 5432,
-  username: "postgres",
-  password: "468146",
-  database: "pokedexdb",
+  type: process.env.TYPEORM_TYPE,
+  host: process.env.TYPEORM_HOST,
+  port: Number(process.env.TYPEORM_PORT),
+  username: process.env.TYPEORM_USERNAME,
+  password: process.env.TYPEORM_PASSWORD,
+  database: process.env.TYPEORM_DATABASE,
 
   logging: ["error", "schema", "warn"],
 

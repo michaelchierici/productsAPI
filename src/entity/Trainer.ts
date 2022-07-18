@@ -25,7 +25,7 @@ export class Trainer {
   @DeleteDateColumn()
   deletedAt: Date;
 
-  @OneToMany(() => Pokemon, (pokemon) => pokemon.trainer)
+  @OneToMany(() => Pokemon, (pokemons) => pokemons.trainer)
   @JoinColumn()
   pokemons: Pokemon[];
 }
