@@ -30,7 +30,7 @@ export class PokemonService {
       name,
     });
     await pokemonRepository.save(pokemonUpdated);
-    console.log(pokemonUpdated, `evoluído para ${pokemon.name}`);
+    console.log(`evoluído para ${pokemonUpdated.name}`);
     return pokemonUpdated;
   }
 
