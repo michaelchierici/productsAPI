@@ -3,8 +3,8 @@ import { PokemonService } from "../services/PokemonService";
 
 export class PokemonController {
   static create(req: Request, res: Response, next: NextFunction) {
-    const { name, type, trainer } = req.body;
-    const response = PokemonService.create(name, type, trainer);
+    const { name, type } = req.body;
+    const response = PokemonService.create(name, type);
     res.status(200).json(response);
   }
 

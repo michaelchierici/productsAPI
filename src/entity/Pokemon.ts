@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { List } from "./List";
 import { Trainer } from "./Trainer";
 
 @Entity("pokemon")
@@ -19,8 +20,8 @@ export class Pokemon {
   @Column()
   type: string;
 
-  @ManyToOne(() => Trainer, (trainer) => trainer.pokemons)
-  trainer: string;
+  @ManyToOne(() => List, (trainer) => trainer.pokemon)
+  pokemon: List[];
 
   @Column()
   @UpdateDateColumn()

@@ -3,20 +3,27 @@ import {
   DeleteDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { List } from "./List";
 import { Pokemon } from "./Pokemon";
+import { Trainer } from "./Trainer";
 
-@Entity("trainer")
-export class Trainer {
+@Entity("List")
+export class List {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  name: string;
+  @ManyToOne(() => Pokemon, (list) => list.pokemon)
+  @JoinColumn()
+  pokemon: Pokemon[];
+
+  @ManyToOne(() => Trainer, (list) => list.trainer)
+  @JoinColumn()
+  trainer: Trainer[];
 
   @Column()
   @UpdateDateColumn()
@@ -25,7 +32,4 @@ export class Trainer {
   @Column()
   @DeleteDateColumn()
   deletedAt: Date;
-
-  @OneToMany(() => List, (pokemons) => pokemons.trainer)
-  trainer: List[];
 }
