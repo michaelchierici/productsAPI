@@ -3,8 +3,9 @@ import { TrainerService } from "../services/TrainerService";
 
 export class TrainerController {
   static create(req: Request, res: Response, next: NextFunction) {
-    const { name } = req.body;
-    const response = TrainerService.create(name);
+    const { name, password } = req.body;
+    const response = TrainerService.create(name, password);
+    console.log(response);
     res.status(200).json(response);
   }
 

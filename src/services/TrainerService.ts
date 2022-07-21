@@ -3,16 +3,16 @@ import { Pokemon } from "../entity/Pokemon";
 import { Trainer } from "../entity/Trainer";
 
 export class TrainerService {
-  static async create(name: string) {
+  static create(name: string, password: string) {
     const trainerRepository = getRepository(Trainer);
-    const trainer = trainerRepository.create({ name });
+    const trainer = trainerRepository.create({ name, password });
     trainerRepository.save(trainer);
     return trainer;
   }
 
-  static findAll() {
+  static async findAll() {
     const trainerRepository = getRepository(Trainer);
-    const trainers = trainerRepository.find();
+    const trainers = await trainerRepository.find();
     return trainers;
   }
 

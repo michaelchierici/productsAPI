@@ -1,4 +1,5 @@
 import {
+  BeforeInsert,
   Column,
   DeleteDateColumn,
   Entity,
@@ -8,12 +9,15 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { List } from "./List";
-import { Pokemon } from "./Pokemon";
 
+import * as bcrypt from "bcrypt";
 @Entity("trainer")
 export class Trainer {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column()
+  password: string;
 
   @Column()
   name: string;
@@ -28,4 +32,9 @@ export class Trainer {
 
   @OneToMany(() => List, (pokemons) => pokemons.trainer)
   trainer: List[];
+
+  @BeforeInsert()
+  async hashPassword() {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
 }
