@@ -5,12 +5,14 @@ import {
   Entity,
   JoinColumn,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { List } from "./List";
 
 import * as bcrypt from "bcrypt";
+import { RefreshToken } from "./RefreshToken";
 @Entity("trainer")
 export class Trainer {
   @PrimaryGeneratedColumn()
@@ -21,6 +23,10 @@ export class Trainer {
 
   @Column()
   name: string;
+
+  @OneToOne(() => RefreshToken, (token) => token.trainer)
+  @JoinColumn()
+  refreshToken: Trainer;
 
   @Column()
   @UpdateDateColumn()

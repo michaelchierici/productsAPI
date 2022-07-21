@@ -3,6 +3,8 @@ import { Trainer } from "../entity/Trainer";
 import { sign } from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
 import { JWT_CONFIG } from "../../enviroments/enviroment";
+import dayjs from "dayjs";
+import { RefreshToken } from "../entity/RefreshToken";
 
 export class AuthService {
   static async checkUser(name: any, password: any) {
@@ -21,12 +23,11 @@ export class AuthService {
       console.log("credenciais inválidas");
       return;
     }
-    console.log(user, "service");
 
     const token = AuthService.generateToken(user?.id);
-    console.log(token);
+    const refreshToken = await AuthService.generateRefreshToken(user?.id);
 
-    return { user, token };
+    return { user, token, refreshToken };
   }
 
   static generateToken(userId: number) {
@@ -36,5 +37,28 @@ export class AuthService {
     });
 
     return token;
+  }
+  static async generateRefreshToken(userId: number | string) {
+    const refreshTokenRepository = getRepository(RefreshToken);
+    const experesIn = dayjs()
+      .add(JWT_CONFIG.jwtSecretExpiresIn - 60, "seconds")
+      .unix();
+
+    const refreshToken = await refreshTokenRepository.findOne({
+      where: { trainer: { id: userId } },
+    });
+
+    if (refreshToken) {
+      refreshTokenRepository.merge(refreshToken, { experesIn });
+      await refreshTokenRepository.save(refreshToken);
+      return refreshToken;
+    }
+    const newRefreshToken = refreshTokenRepository.create({
+      trainer: { id: Number(userId) },
+      experesIn,
+    });
+    await refreshTokenRepository.save(newRefreshToken);
+
+    return refreshToken;
   }
 }
