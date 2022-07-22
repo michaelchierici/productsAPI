@@ -1,7 +1,5 @@
 import { getRepository } from "typeorm";
 import { List } from "../entity/List";
-import { Pokemon } from "../entity/Pokemon";
-import { Trainer } from "../entity/Trainer";
 
 export class ListService {
   static async findList(trainerId: any) {

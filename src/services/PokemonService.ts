@@ -2,9 +2,9 @@ import { getRepository } from "typeorm";
 import { Pokemon } from "../entity/Pokemon";
 
 export class PokemonService {
-  static create(name: string, type: string) {
+  static create(name: string, ammount: number, type: string, price: number) {
     const pokemonRepository = getRepository(Pokemon);
-    const pokemon = pokemonRepository.create({ name, type });
+    const pokemon = pokemonRepository.create({ name, ammount, type, price });
     pokemonRepository.save(pokemon);
     return pokemon;
   }

@@ -7,7 +7,6 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { List } from "./List";
-import { Trainer } from "./Trainer";
 
 @Entity("pokemon")
 export class Pokemon {
@@ -19,6 +18,12 @@ export class Pokemon {
 
   @Column()
   type: string;
+
+  @Column()
+  ammount: number;
+
+  @Column()
+  price: number;
 
   @ManyToOne(() => List, (trainer) => trainer.pokemon)
   pokemon: List[];
