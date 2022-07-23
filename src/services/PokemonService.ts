@@ -2,16 +2,28 @@ import { getRepository } from "typeorm";
 import { Pokemon } from "../entity/Pokemon";
 
 export class PokemonService {
-  static create(name: string, ammount: number, type: string, price: number) {
+  static create(
+    name: string,
+    ammount: number,
+    type: string,
+    price: number,
+    img: string
+  ) {
     const pokemonRepository = getRepository(Pokemon);
-    const pokemon = pokemonRepository.create({ name, ammount, type, price });
+    const pokemon = pokemonRepository.create({
+      name,
+      ammount,
+      type,
+      price,
+      img,
+    });
     pokemonRepository.save(pokemon);
     return pokemon;
   }
 
   static async findAll() {
     const pokemonRepository = getRepository(Pokemon);
-    const pokemons = await pokemonRepository.findAndCount();
+    const pokemons = await pokemonRepository.findAndCount({});
     console.log(pokemons[1], "pokemons encontrados");
     return pokemons;
   }

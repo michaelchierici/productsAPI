@@ -3,12 +3,12 @@ import { PokemonService } from "../services/PokemonService";
 
 export class PokemonController {
   static create(req: Request, res: Response) {
-    const { name, ammount, type, price } = req.body;
-    const response = PokemonService.create(name, ammount, type, price);
+    const { name, ammount, type, price, img } = req.body;
+    const response = PokemonService.create(name, ammount, type, price, img);
     res.status(200).json(response);
   }
 
-  static async findAll(res: Response) {
+  static async findAll(req: Request, res: Response) {
     const response = await PokemonService.findAll();
     res.status(200).json(response);
   }

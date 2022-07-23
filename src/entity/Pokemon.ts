@@ -25,6 +25,9 @@ export class Pokemon {
   @Column()
   price: number;
 
+  @Column()
+  img: string;
+
   @ManyToOne(() => List, (trainer) => trainer.pokemon)
   pokemon: List[];
 

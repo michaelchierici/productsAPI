@@ -11,9 +11,6 @@ export class AppController {
     createConnection();
     app.use(express.json());
     app.use(cors());
-    app.get("/", (req: Request, res: Response) => {
-      res.send("hello world");
-    });
     app.use(Routes);
     app.listen(3000, () => {
       console.log("server is running on http://localhost:3000");
