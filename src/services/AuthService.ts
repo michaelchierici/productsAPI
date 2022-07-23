@@ -1,14 +1,16 @@
 import { getRepository } from "typeorm";
-import { Trainer } from "../entity/Trainer";
 import { sign } from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
 import { JWT_CONFIG } from "../../enviroments/enviroment";
-import dayjs from "dayjs";
 import { RefreshToken } from "../entity/RefreshToken";
+import dayjs, { unix } from "dayjs";
+import { AppError } from "../@types/AppError";
+import { Trainer } from "../entity/Trainer";
 
 export class AuthService {
-  static async checkUser(name: any, password: any) {
+  static async login(name: any, password: any) {
     const userRepository = getRepository(Trainer);
+
     const user = await userRepository.findOne({
       where: { name },
     });
@@ -25,6 +27,7 @@ export class AuthService {
     }
 
     const token = AuthService.generateToken(user?.id);
+
     const refreshToken = await AuthService.generateRefreshToken(user?.id);
 
     return { user, token, refreshToken };
@@ -40,8 +43,8 @@ export class AuthService {
   }
   static async generateRefreshToken(userId: number | string) {
     const refreshTokenRepository = getRepository(RefreshToken);
-    const experesIn = dayjs()
-      .add(JWT_CONFIG.jwtSecretExpiresIn - 60, "seconds")
+    const expiresIn = dayjs()
+      .add(JWT_CONFIG.jwtSecretExpiresIn, "seconds")
       .unix();
 
     const refreshToken = await refreshTokenRepository.findOne({
@@ -49,16 +52,49 @@ export class AuthService {
     });
 
     if (refreshToken) {
-      refreshTokenRepository.merge(refreshToken, { experesIn });
+      refreshTokenRepository.merge(refreshToken, { expiresIn });
       await refreshTokenRepository.save(refreshToken);
       return refreshToken;
     }
+    console.log(refreshToken);
     const newRefreshToken = refreshTokenRepository.create({
       trainer: { id: Number(userId) },
-      experesIn,
+      expiresIn,
     });
     await refreshTokenRepository.save(newRefreshToken);
 
     return refreshToken;
+  }
+
+  static async generateTokenFromRefreshToken(refreshTokenId: any) {
+    const refreshTokenRepository = getRepository(RefreshToken);
+
+    const refreshToken = await refreshTokenRepository.findOne({
+      where: { id: refreshTokenId },
+      relations: ["trainer"],
+    });
+
+    if (!refreshToken) {
+      throw new AppError(401, "error");
+    }
+
+    const token = AuthService.generateToken(refreshTokenId.user);
+
+    const isRefreshTokenExpired = dayjs
+      .unix(refreshToken.expiresIn)
+      .isAfter(dayjs());
+
+    const expiresIn = dayjs()
+      .add(JWT_CONFIG.jwtSecretExpiresIn, "seconds")
+      .unix();
+
+    if (isRefreshTokenExpired) {
+      throw new AppError(403, "error");
+    }
+
+    refreshTokenRepository.merge(refreshToken, { expiresIn });
+    await refreshTokenRepository.save(refreshToken);
+    console.log(refreshToken);
+    return { token, refreshToken, user: refreshToken.trainer };
   }
 }

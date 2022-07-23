@@ -16,13 +16,13 @@ export class RefreshToken {
   id: string;
 
   @Column()
-  experesIn: number;
+  expiresIn: number;
 
   @Column()
   @CreateDateColumn()
   createdAt?: Date;
 
-  @OneToOne(() => Trainer, (coach) => coach.refreshToken)
+  @OneToOne(() => Trainer, (trainer) => trainer.refreshToken)
   @JoinColumn()
   trainer: Trainer;
 

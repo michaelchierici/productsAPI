@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { TrainerController } from "../controller/TrainerController";
+import { TrainerController } from "../../controller/TrainerController";
 
 const trainerRouter = Router();
 
