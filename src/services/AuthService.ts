@@ -14,6 +14,7 @@ export class AuthService {
     const user = await userRepository.findOne({
       where: { name },
     });
+    console.log(user);
     if (!user) {
       console.log("falha no login");
       return;

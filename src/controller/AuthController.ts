@@ -3,8 +3,8 @@ import { AuthService } from "../services/AuthService";
 
 export class AuthController {
   static async login(req: Request, res: Response) {
-    const { name, password } = req.body;
-    const response = await AuthService.login(name, password);
+    const { user, password } = req.body;
+    const response = await AuthService.login(user, password);
 
     if (response) {
       res.status(200).json(response);
