@@ -23,8 +23,8 @@ export class PokemonService {
 
   static async findAll() {
     const pokemonRepository = getRepository(Pokemon);
-    const pokemons = await pokemonRepository.findAndCount({});
-    console.log(pokemons[1], "pokemons encontrados");
+    const pokemons = await pokemonRepository.find({});
+
     return pokemons;
   }
 
