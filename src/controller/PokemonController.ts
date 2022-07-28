@@ -10,7 +10,9 @@ export class PokemonController {
 
   static async findAll(req: Request, res: Response) {
     const response = await PokemonService.findAll();
-    res.status(200).json(response);
+    if (response) {
+      res.status(200).json(response);
+    }
   }
 
   static async findById(req: Request, res: Response) {

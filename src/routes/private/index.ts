@@ -6,7 +6,6 @@ import { trainerRouter } from "./trainerRouter";
 const PrivateRoutes = Router();
 
 PrivateRoutes.use("/pokemons", pokemonRouter);
-PrivateRoutes.use("/trainer", trainerRouter);
 PrivateRoutes.use("/list", listRouter);
 
 export { PrivateRoutes };

@@ -3,8 +3,6 @@ import { TrainerController } from "../../controller/TrainerController";
 
 const trainerRouter = Router();
 
-trainerRouter.post("/", TrainerController.create);
-
 trainerRouter.get("/", TrainerController.findAll);
 
 trainerRouter.get("/:id", TrainerController.findById);
