@@ -76,7 +76,7 @@ export class AuthService {
     });
 
     if (!refreshToken) {
-      throw new AppError(401, "error");
+      throw new AppError(401, "token expirado");
     }
 
     const token = AuthService.generateToken(refreshTokenId.user);
