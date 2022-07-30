@@ -3,11 +3,20 @@ import { Pokemon } from "../entity/Pokemon";
 import { Trainer } from "../entity/Trainer";
 
 export class TrainerService {
-  static create(name: string, password: string) {
+  static async create(name: string, password: string) {
     const trainerRepository = getRepository(Trainer);
-    const trainer = trainerRepository.create({ name, password });
-    trainerRepository.save(trainer);
-    return trainer;
+    const trainer = await trainerRepository.findOne({
+      where: { name },
+    });
+    if (!trainer) {
+      const user = trainerRepository.create({ name, password });
+      await trainerRepository.save(user);
+      console.log(user);
+      return user;
+    } else {
+      console.log("usuário existente");
+      return;
+    }
   }
 
   static async findAll() {
