@@ -10,7 +10,7 @@ export class AuthController {
       res.status(200).json(response);
     }
     if (!response) {
-      res.status(500).json({ message: "credenciais inválida!" });
+      res.status(500).json({ message: "credenciais inválidas!", status: 500 });
     }
   }
 

@@ -1,4 +1,5 @@
 import { getRepository } from "typeorm";
+import { AppError } from "../@types/AppError";
 import { Pokemon } from "../entity/Pokemon";
 import { Trainer } from "../entity/Trainer";
 
@@ -13,9 +14,9 @@ export class TrainerService {
       await trainerRepository.save(user);
       console.log(user);
       return user;
-    } else {
-      console.log("usuário existente");
-      return;
+    }
+    if (trainer) {
+      console.log(401, "usuário existente");
     }
   }
 

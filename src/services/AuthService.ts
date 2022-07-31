@@ -44,6 +44,7 @@ export class AuthService {
   }
   static async generateRefreshToken(userId: number | string) {
     const refreshTokenRepository = getRepository(RefreshToken);
+
     const expiresIn = dayjs()
       .add(JWT_CONFIG.jwtSecretExpiresIn, "seconds")
       .unix();
@@ -55,6 +56,7 @@ export class AuthService {
     if (refreshToken) {
       refreshTokenRepository.merge(refreshToken, { expiresIn });
       await refreshTokenRepository.save(refreshToken);
+
       return refreshToken;
     }
     console.log(refreshToken);
@@ -80,7 +82,6 @@ export class AuthService {
     }
 
     const token = AuthService.generateToken(refreshTokenId.user);
-
     const isRefreshTokenExpired = dayjs
       .unix(refreshToken.expiresIn)
       .isAfter(dayjs());
@@ -95,7 +96,7 @@ export class AuthService {
 
     refreshTokenRepository.merge(refreshToken, { expiresIn });
     await refreshTokenRepository.save(refreshToken);
-    console.log(refreshToken);
+
     return { token, refreshToken, user: refreshToken.trainer };
   }
 }

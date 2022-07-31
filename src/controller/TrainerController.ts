@@ -2,11 +2,18 @@ import { NextFunction, Request, Response } from "express";
 import { TrainerService } from "../services/TrainerService";
 
 export class TrainerController {
-  static create(req: Request, res: Response, next: NextFunction) {
+  static async create(req: Request, res: Response, next: NextFunction) {
     const { user, password } = req.body;
-    const response = TrainerService.create(user, password);
-    console.log(response);
-    res.status(200).json(response);
+    const response = await TrainerService.create(user, password);
+    if (response) {
+      res.status(200).json(response);
+      console.log(response, "controller 200");
+    } else {
+      console.log(response, "controller 401");
+      res
+        .status(401)
+        .json({ message: "nome de usuário já existe", error: 401 });
+    }
   }
 
   static async findAll(req: Request, res: Response, next: NextFunction) {
