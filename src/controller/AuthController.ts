@@ -5,7 +5,7 @@ export class AuthController {
   static async login(req: Request, res: Response) {
     const { user, password } = req.body;
     const response = await AuthService.login(user, password);
-
+    console.log(response);
     if (response) {
       res.status(200).json(response);
     }

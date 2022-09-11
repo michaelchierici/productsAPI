@@ -36,7 +36,7 @@ export class Trainer {
   @DeleteDateColumn()
   deletedAt: Date;
 
-  @OneToMany(() => List, (pokemons) => pokemons.trainer)
+  @OneToMany(() => List, (products) => products.trainer)
   trainer: List[];
 
   @BeforeInsert()

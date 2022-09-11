@@ -1,11 +1,10 @@
 import { Router } from "express";
 import { listRouter } from "./listRouter";
-import { pokemonRouter } from "./pokemonRouter";
-import { trainerRouter } from "./trainerRouter";
+import { productRouter } from "./productRouter";
 
 const PrivateRoutes = Router();
 
-PrivateRoutes.use("/pokemons", pokemonRouter);
+PrivateRoutes.use("/products", productRouter);
 PrivateRoutes.use("/list", listRouter);
 
 export { PrivateRoutes };

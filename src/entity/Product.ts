@@ -9,7 +9,7 @@ import {
 import { List } from "./List";
 
 @Entity("pokemon")
-export class Pokemon {
+export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -28,8 +28,8 @@ export class Pokemon {
   @Column()
   img: string;
 
-  @ManyToOne(() => List, (trainer) => trainer.pokemon)
-  pokemon: List[];
+  @ManyToOne(() => List, (trainer) => trainer.product)
+  product: List[];
 
   @Column()
   @UpdateDateColumn()

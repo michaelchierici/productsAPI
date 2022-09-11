@@ -5,20 +5,19 @@ export class ListService {
   static async findList(trainerId: any) {
     const listRepository = getRepository(List);
     const lists = await listRepository.find({
-      relations: ["pokemon"],
+      relations: ["product"],
       where: {
         trainer: {
           id: trainerId,
         },
       },
     });
-    console.log(lists.length, "pokemons encontrados na lista");
     return lists;
   }
 
-  static add(trainer: any, pokemon: any) {
+  static add(trainer: any, product: any) {
     const listRepository = getRepository(List);
-    const list = listRepository.create({ trainer, pokemon });
+    const list = listRepository.create({ trainer, product });
     listRepository.save(list);
     console.log(list);
     return list;

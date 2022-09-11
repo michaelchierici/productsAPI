@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ListService } from "../services/ListService";
-import { PokemonService } from "../services/PokemonService";
+import { ProductService } from "../services/ProductService";
 import { TrainerService } from "../services/TrainerService";
 
 export class ListController {
@@ -15,11 +15,11 @@ export class ListController {
   }
 
   static async add(req: Request, res: Response, next: NextFunction) {
-    const { pokemonId, trainerId } = req.params;
-    console.log(pokemonId, trainerId);
+    const { productId, trainerId } = req.params;
+    console.log(productId, trainerId);
     const trainer = await TrainerService.findOne(trainerId);
-    const pokemon = await PokemonService.findOne(pokemonId);
-    const response = await ListService.add(trainer, pokemon);
+    const product = await ProductService.findOne(productId);
+    const response = await ListService.add(trainer, product);
     res.status(200).json(response);
   }
 

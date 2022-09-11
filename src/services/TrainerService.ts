@@ -1,6 +1,5 @@
 import { getRepository } from "typeorm";
-import { AppError } from "../@types/AppError";
-import { Pokemon } from "../entity/Pokemon";
+import { Product } from "../entity/Product";
 import { Trainer } from "../entity/Trainer";
 
 export class TrainerService {
@@ -12,7 +11,6 @@ export class TrainerService {
     if (!trainer) {
       const user = trainerRepository.create({ name, password });
       await trainerRepository.save(user);
-      console.log(user);
       return user;
     }
     if (trainer) {
@@ -29,7 +27,6 @@ export class TrainerService {
   static async findOne(id: any) {
     const trainerRepository = getRepository(Trainer);
     const trainer = await trainerRepository.findOne(id);
-    console.log(trainer, `Esse treinador se chama ${trainer.name}`);
     return trainer;
   }
 
@@ -40,13 +37,11 @@ export class TrainerService {
       name,
     });
     await trainerRepository.save(trainerUpdated);
-    console.log(`alterou o nome para ${trainerUpdated.name}`);
     return trainerUpdated;
   }
   static async delete(id: any) {
-    const trainerRepository = getRepository(Pokemon);
+    const trainerRepository = getRepository(Product);
     const trainer = await trainerRepository.findOne(id);
     const trainerDeleted = await trainerRepository.softRemove(trainer);
-    console.log(trainerDeleted, `${trainer.name} excluído com sucesso`);
   }
 }
