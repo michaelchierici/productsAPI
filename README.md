@@ -1,1 +1,1 @@
-# pokedexAPI
+# productsAPI
